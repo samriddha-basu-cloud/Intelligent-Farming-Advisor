@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroPulse</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #7C9D45;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #navbar-left {
+            display: flex;
+            align-items: center;
+        }
+
+        #navbar-left h1 {
+            margin: 0;
+        }
+
+        #navbar-right {
+            display: flex;
+            align-items: center;
+        }
+
+        #user-profile, #notifications {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            margin-left: 20px;
+            color: #fff;
+            font-size: 18px;
+        }
+
+        #dashboard-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin: 15px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #7C9D45;
+        }
+
+        p {
+            color: #666;
+        }
+
+        /* Media queries for responsiveness */
+        @media only screen and (max-width: 768px) {
+            #dashboard-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .card {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div id="navbar-left">
+            <h1>AgroPulse</h1>
+        </div>
+        <div id="navbar-right">
+            <button id="user-profile"><i class="fas fa-user"></i></button>
+            <button id="notifications"><i class="fas fa-bell"></i></button>
+        </div>
+    </header>
+
+    <div id="dashboard-container"></div>
+
+    <script>
+        const apiKey = 'b221555dffb944fbbf2133329241901';
+        const city = 'Ghaziabad';
+
+        async function fetchWeatherData() {
+            try {
+                const response = await fetch(`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}`);
+                const data = await response.json();
+
+                const temperature = data.current.temp_c;
+                const humidity = data.current.humidity;
+
+                // Additional air quality data
+                const airQualityData = data.air_quality || {};
+                const co = airQualityData.co || 'N/A';
+                const no2 = airQualityData.no2 || 'N/A';
+                const o3 = airQualityData.o3 || 'N/A';
+                const so2 = airQualityData.so2 || 'N/A';
+                const pm25 = airQualityData.pm2_5 || 'N/A';
+                const pm10 = airQualityData.pm10 || 'N/A';
+                const usEpaIndex = airQualityData['us-epa-index'] || 'N/A';
+                const gbDefraIndex = airQualityData['gb-defra-index'] || 'N/A';
+
+                // Additional weather data
+                const precipitation = data.current.precip_mm || 'N/A';
+                const cloudCover = data.current.cloud || 'N/A';
+
+                return { temperature, humidity, co, no2, o3, so2, pm25, pm10, usEpaIndex, gbDefraIndex, precipitation, cloudCover };
+            } catch (error) {
+                console.error('Error fetching weather data:', error);
+                return null;
+            }
+        }
+
+        function createCard(title, value) {
+            const card = document.createElement('div');
+            card.className = 'card';
+
+            const titleElement = document.createElement('h2');
+            titleElement.textContent = title;
+
+            const valueElement = document.createElement('p');
+            valueElement.textContent = value;
+
+            card.appendChild(titleElement);
+            card.appendChild(valueElement);
+
+            return card;
+        }
+
+        async function populateDashboard() {
+            const dashboardContainer = document.getElementById('dashboard-container');
+
+            const weatherData = await fetchWeatherData();
+
+            if (weatherData) {
+                const parameterArray = [
+                    { title: 'Temperature', dataKey: 'temperature', unit: '°C' },
+                    { title: 'Humidity', dataKey: 'humidity', unit: '%' },
+                    { title: 'CO', dataKey: 'co', unit: 'µg/m³' },
+                    { title: 'NO2', dataKey: 'no2', unit: 'µg/m³' },
+                    { title: 'O3', dataKey: 'o3', unit: 'µg/m³' },
+                    { title: 'SO2', dataKey: 'so2', unit: 'µg/m³' },
+                    { title: 'PM2.5', dataKey: 'pm25', unit: 'µg/m³' },
+                    { title: 'PM10', dataKey: 'pm10', unit: 'µg/m³' },
+                    { title: 'US EPA Index', dataKey: 'usEpaIndex', unit: '' },
+                    { title: 'GB DEFRA Index', dataKey: 'gbDefraIndex', unit: '' },
+                    { title: 'Precipitation', dataKey: 'precipitation', unit: 'mm' },
+                    { title: 'Cloud Cover', dataKey: 'cloudCover', unit: '%' }
+                ];
+
+                parameterArray.forEach((parameter) => {
+                    const { title, dataKey, unit } = parameter;
+                    const cardValue = weatherData[dataKey];
+
+                    const card = createCard(title, `${cardValue}${unit}`);
+                    dashboardContainer.appendChild(card);
+                });
+            }
+        }
+
+        window.onload = function () {
+            populateDashboard();
+        };
+    </script>
+    
+</body>
+</html>
