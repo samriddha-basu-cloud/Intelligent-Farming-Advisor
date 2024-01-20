@@ -77,6 +77,13 @@
             display: block;
         }
 
+       .section-header {
+            background-color: #7C9D45;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
         .chart-container {
             width: 80%;
             margin: 20px auto;
@@ -106,7 +113,11 @@
         </div>
     </header>
 
+    
+
     <div id="dashboard-container"></div>
+
+    
 
     <div class="chart-container">
         <canvas id="weatherChart" width="400" height="200"></canvas>
@@ -120,9 +131,27 @@
         const apiKey = 'b221555dffb944fbbf2133329241901';
         const city = 'Ghaziabad';
 
+        function createHeader(city) {
+            const header = document.createElement('div');
+            header.className = 'section-header';
+            header.textContent = `Current Data of ${city}`;
+
+            document.body.insertBefore(header, document.getElementById('dashboard-container'));
+        }
+
+        function createForecastHeader(city) {
+            const forecastHeader = document.createElement('div');
+            forecastHeader.className = 'section-header';
+            forecastHeader.textContent = `7-Day Forecast of ${city}`;
+
+            document.body.insertBefore(forecastHeader, document.getElementsByClassName('chart-container')[0]);
+        }
+
+        
+
         async function fetchWeatherData() {
             try {
-                const response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=b221555dffb944fbbf2133329241901&q=Ghaziabad&days=7&aqi=yes&alerts=yes`);
+                const response = await fetch(`http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}&aqi=yes`);
                 const data = await response.json();
 
                 if (response.ok) {
@@ -143,6 +172,8 @@
                     // Additional weather data
                     const precipitation = data.current.precip_mm ?? 'N/A';
                     const cloudCover = data.current.cloud ?? 'N/A';
+
+                    createHeader(city);
 
                     return {
                         temperature, humidity, co, no2, o3, so2, pm25, pm10,
@@ -247,13 +278,15 @@
 
         async function fetchForecastData() {
             try {
-                const response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=b221555dffb944fbbf2133329241901&q=Ghaziabad&days=7&aqi=yes&alerts=yes`);
+                const response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${city}&days=7&aqi=yes&alerts=yes`);
                 const data = await response.json();
 
                 if (response.ok) {
                     const labels = data.forecast.forecastday.map(day => day.date);
                     const weatherData = data.forecast.forecastday.map(day => day.day.avgtemp_c);
                     const humidityData = data.forecast.forecastday.map(day => day.day.avghumidity);
+
+                    createForecastHeader(city);
 
                     createChart('weatherChart', labels, weatherData, 'Temperature (°C)');
                     createChart('humidityChart', labels, humidityData, 'Humidity (%)');
