@@ -8,6 +8,15 @@
     <link rel="icon" type="image/png" href="assets/images/favicon.png">
 
     <style>
+        ::-moz-selection { /* Code for Firefox */
+            color: #F8FFF8;
+            background: #4CAF50;
+        }
+
+        ::selection {
+            color: #F8FFF8;
+            background: #4CAF50;
+        }
         #particles-js {
             position: absolute;
             width: 100%;
@@ -314,7 +323,7 @@
                 <input type="tel" class="input-field" id="mobile" placeholder="Mobile No." required>
                 <input type="email" class="input-field" id="email" placeholder="Email (Optional)">
                 <input type="password" class="input-field" id="regPassword" placeholder="Password" required>
-                <input type="password" class="input-field" id="rewritePassword" placeholder="Rewrite Password" required>
+                <input type="password" class="input-field" id="rewritePassword" placeholder="Confirm Password" required>
                 <button type="submit" class="submit-button">Register</button>
             </form>
             <p><a href="#" class="login-link" onclick="showLoginForm()">Login</a>, if already registered. </p>
