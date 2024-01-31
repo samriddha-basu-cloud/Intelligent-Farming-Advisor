@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroPulse&#8480; Login</title>
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+
+    <style>
+        ::-moz-selection { /* Code for Firefox */
+            color: #F8FFF8;
+            background: #4CAF50;
+        }
+
+        ::selection {
+            color: #F8FFF8;
+            background: #4CAF50;
+        }
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #f8fff8;
+            background-image: url("");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: 50% 50%;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #F8FFF8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .login-container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 350px;
+            text-align: center;
+            position: relative;
+        }
+
+        .login-header,
+        .register-header {
+            background-color: #4CAF50;
+            color: #ffffff;
+            padding: 15px;
+        }
+
+        .login-header h1,
+        .register-header h1 {
+            margin: 5px 0;
+        }
+
+        .login-form,
+        .register-form {
+            padding: 20px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .input-field:focus {
+            border-color: #4CAF50;
+        }
+
+        .submit-button {
+            background-color: #4CAF50;
+            color: #ffffff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .submit-button:hover {
+            background-color: #45a049;
+        }
+
+        .register-link,
+        .login-link {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .register-link:hover,
+        .login-link:hover {
+            color: #45a049;
+        }
+
+        .login-container p {
+            font-weight: bold;
+        }
+
+        .responsive-image {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            max-width: 25%;
+            height: auto;
+            margin: 10px;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .login-container {
+                width: 80%;
+            }
+
+            .responsive-image {
+                max-width: 30%;
+            }
+
+            .login-header h1,
+            .register-header h1 {
+                font-size: 18px;
+            }
+
+            .login-header h2,
+            .register-header h2 {
+                font-size: 14px;
+            }
+
+            .input-field {
+                padding: 8px;
+                font-size: 12px;
+            }
+
+            .login-container p {
+                font-weight: bold;
+                font-size: 12px;
+            }
+
+            .submit-button {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- particles.js container -->
+    <div id="particles-js"></div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 400,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#4caf50"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    },
+                    "image": {
+                        "src": "img/github.svg",
+                        "width": 100,
+                        "height": 100
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 10,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": false,
+                    "distance": 500,
+                    "color": "#ffffff",
+                    "opacity": 0.4,
+                    "width": 2
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "bottom",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "bubble"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "repulse"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 400,
+                        "line_linked": {
+                            "opacity": 0.5
+                        }
+                    },
+                    "bubble": {
+                        "distance": 10,
+                        "size": 24.360931562022948,
+                        "duration": 0.24360931562022947,
+                        "opacity": 0.38977490499236717,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 211.12807353753223,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+
+        var count_particles, stats, update;
+        stats = new Stats;
+        stats.setMode(0);
+        stats.domElement.style.position = 'absolute';
+        stats.domElement.style.left = '0px';
+        stats.domElement.style.top = '0px';
+        document.body.appendChild(stats.domElement);
+        count_particles = document.querySelector('.js-count-particles');
+        update = function () {
+            stats.begin();
+            stats.end();
+            if (window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array) {
+                count_particles.innerText = window.pJSDom[0].pJS.particles.array.length;
+            }
+            requestAnimationFrame(update);
+        };
+        requestAnimationFrame(update);
+    </script>
+
+
+
+    <div class="login-container">
+        <div class="login-header" id="loginHeader">
+            <h1>AgroPulse&#8480;</h1>
+            <h2>Login</h2>
+        </div>
+        <div class="login-form" id="loginForm">
+            <form>
+                <input type="tel" class="input-field" id="mobile" placeholder="Mobile No." required>
+                <input type="password" class="input-field" id="password" placeholder="Password" required>
+                <button type="submit" class="submit-button">Login</button>
+            </form>
+            <p>Don't have an account? <a href="#" class="register-link" onclick="showRegisterForm()">Register</a></p>
+        </div>
+
+        <div class="register-header" id="registerHeader" style="display: none;">
+            <h1>AgroPulse&#8480;</h1>
+            <h2>Registration</h2>
+        </div>
+        <div class="register-form" id="registerForm" style="display: none;">
+            <form>
+                <input type="text" class="input-field" id="name" placeholder="Name" required>
+                <input type="text" class="input-field" id="aadhaar" placeholder="Aadhaar No." required>
+                <input type="tel" class="input-field" id="mobile" placeholder="Mobile No." required>
+                <input type="email" class="input-field" id="email" placeholder="Email (Optional)">
+                <input type="password" class="input-field" id="regPassword" placeholder="Password" required>
+                <input type="password" class="input-field" id="rewritePassword" placeholder="Confirm Password" required>
+                <button type="submit" class="submit-button">Register</button>
+            </form>
+            <p><a href="#" class="login-link" onclick="showLoginForm()">Login</a>, if already registered. </p>
+        </div>
+
+        
+    </div>
+
+    <img class="responsive-image" src="assets/images/loginImage.png" alt="Login Image">
+
+    <script>
+        function showRegisterForm() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'block';
+            document.getElementById('loginHeader').style.display = 'none';
+            document.getElementById('registerHeader').style.display = 'block';
+        }
+    
+        function showLoginForm() {
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('loginHeader').style.display = 'block';
+            document.getElementById('registerHeader').style.display = 'none';
+        }
+    
+        function validateRegistrationForm() {
+            var password = document.getElementById('regPassword').value;
+            var rewritePassword = document.getElementById('rewritePassword').value;
+    
+            if (password !== rewritePassword) {
+                alert('Passwords do not match. Please re-enter.');
+                return false;
+            }
+    
+            // Continue with registration logic
+            // You can add AJAX to send registration data to the server
+    
+            return true;
+        }
+    
+        document.getElementById('loginForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            // You can add your login logic here
+            // For example, you can use AJAX to send login credentials to the server
+        });
+    
+        document.getElementById('registerForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            // Validate passwords before submitting the form
+            if (validateRegistrationForm()) {
+                // Continue with the registration logic
+            }
+        });
+    </script>
+    
+
+</body>
+
+</html>
