@@ -323,7 +323,7 @@
                 <input type="tel" class="input-field" id="mobile" placeholder="Mobile No." required>
                 <input type="email" class="input-field" id="email" placeholder="Email (Optional)">
                 <input type="password" class="input-field" id="regPassword" placeholder="Password" required>
-                <input type="password" class="input-field" id="rewritePassword" placeholder="Confirm Password" required>
+                <input type="password" class="input-field" id="rewritePassword" placeholder="Rewrite Password" required>
                 <button type="submit" class="submit-button">Register</button>
             </form>
             <p><a href="#" class="login-link" onclick="showLoginForm()">Login</a>, if already registered. </p>
@@ -334,6 +334,12 @@
 
     <img class="responsive-image" src="assets/images/loginImage.png" alt="Login Image">
 
+    <!-- Disable Right Click -->
+    <script>
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+    </script>
     <script>
         function showRegisterForm() {
             document.getElementById('loginForm').style.display = 'none';
