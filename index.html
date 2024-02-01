@@ -119,7 +119,7 @@
         </div>
         <div id="navbar-right">
             <a href="login.html"><button id="user-profile"><i class="fas fa-user"></i></button></a>
-            <button id="notifications"><i class="fas fa-bell"></i></button>
+            <a href="home.html"><button id="notifications"><i class="fas fa-bell"></i></button></a>
         </div>
     </header>
 
@@ -313,6 +313,11 @@
             fetchForecastData();
         };
     </script>
+    <!-- Disable Right Click -->
+    <script>
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
     </script>
     
 </body>
