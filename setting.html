@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroPulse&#8480;</title>
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        ::-moz-selection { /* Code for Firefox */
+            color: #F8FFF8;
+            background: #4CAF50;
+        }
+
+        ::selection {
+            color: #F8FFF8;
+            background: #4CAF50;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #F8FFF8;
+        }
+
+        header {
+            background-color: #45a049;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #navbar-left {
+            display: flex;
+            align-items: center;
+        }
+
+        #navbar-left h1 {
+            margin: 0;
+        }
+
+        #navbar-right {
+            display: flex;
+            align-items: center;
+        }
+
+        #user-profile, #notifications {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            margin-left: 20px;
+            color: #fff;
+            font-size: 18px;
+        }
+
+        #dashboard-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #45a049;
+        }
+
+        p {
+            color: #666;
+        }
+
+        #pageHeader {
+            font-family: "Times New Roman", Times, serif;
+            letter-spacing: .5px;
+            font-weight: bold;
+            text-align: center;
+            margin: 10px;
+            font-size: 5vh;
+        }
+        #logout-button-container {
+            text-align: center; /* Center the button */
+            margin-top: 20px; /* Adjust the margin as needed */
+        }
+
+        #logout-button {
+            background-color: #45a049;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        #logout-button:hover {
+            background-color: #4CAF50;
+        }
+
+        /* Media queries for responsiveness */
+        @media only screen and (max-width: 768px) {
+            /* Adjust mobile styling as needed */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div id="navbar-left">
+            <h1>AgroPulse&#8480;</h1>
+        </div>
+        <div id="navbar-right">
+            <a href="profile.html"><button id="user-profile"><i class="fas fa-user"></i></button></a>
+            <a href="index.html"><button id="notifications"><i class="fas fa-home"></i></button></a>
+        </div>
+    </header>
+
+    <h2 id="pageHeader">Settings</h2>
+
+    
+
+    
+
+    <!-- Logout button container -->
+    <div id="logout-button-container">
+        <button id="logout-button" onclick="logout()">Log Out</button>
+    </div>
+
+    <!-- Disable Right Click -->
+    <script>
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+
+        function logout() {
+            window.location.href = 'login.html';
+            alert('Logout button clicked. Add your logout logic.');
+        }
+    </script>
+</body>
+</html>

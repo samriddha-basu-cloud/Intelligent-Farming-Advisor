@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroPulse&#8480;</title>
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        ::-moz-selection { /* Code for Firefox */
+            color: #F8FFF8;
+            background: #4CAF50;
+        }
+
+        ::selection {
+            color: #F8FFF8;
+            background: #4CAF50;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #F8FFF8;
+        }
+
+        header {
+            background-color: #45a049;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #navbar-left {
+            display: flex;
+            align-items: center;
+        }
+
+        #navbar-left h1 {
+            margin: 0;
+        }
+
+        #navbar-right {
+            display: flex;
+            align-items: center;
+        }
+
+        #user-profile, #notifications {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            margin-left: 20px;
+            color: #fff;
+            font-size: 18px;
+        }
+
+        #dashboard-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin: 15px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #45a049;
+        }
+
+        p {
+            color: #666;
+        }
+
+        canvas {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+       .section-header {
+            background-color: #45a049;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .chart-container {
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        #pageHeader {
+            font-family: "Times New Roman", Times, serif;
+            letter-spacing: .5px;
+        }
+
+        /* Media queries for responsiveness */
+        @media only screen and (max-width: 768px) {
+            #dashboard-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .card {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div id="navbar-left">
+            <h1>AgroPulse&#8480;</h1>
+        </div>
+        <div id="navbar-right">
+            
+            <a href="index.html"><button id="notifications"><i class="fas fa-home"></i></button></a>
+            <a href="soil.html"><button id="user-profile"><i class="fas fa-microscope"></i></button></a>
+            <a href="profile.html"><button id="user-profile"><i class="fas fa-user"></i></button></a>
+        </div>
+    </header>
+
+    <h2 id="pageHeader" style="font-weight: bold; text-align: center; margin: 10px; font-size: 5vh;">Meteorological Data</h2>
+
+    <div id="dashboard-container"></div>
+
+    
+
+    <div class="chart-container">
+        <canvas id="weatherChart" width="400" height="200"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="humidityChart" width="400" height="200"></canvas>
+    </div>
+
+    <script>
+        const apiKey = 'b221555dffb944fbbf2133329241901';
+        const city = 'Ghaziabad';
+
+        function createHeader(city) {
+            const header = document.createElement('div');
+            header.className = 'section-header';
+            header.textContent = `Current Data of ${city}`;
+
+            document.body.insertBefore(header, document.getElementById('dashboard-container'));
+        }
+
+        function createForecastHeader(city) {
+            const forecastHeader = document.createElement('div');
+            forecastHeader.className = 'section-header';
+            forecastHeader.textContent = `7-Day Forecast of ${city}`;
+
+            document.body.insertBefore(forecastHeader, document.getElementsByClassName('chart-container')[0]);
+        }
+
+        
+
+        async function fetchWeatherData() {
+            try {
+                const response = await fetch(`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}&aqi=yes`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    const temperature = data.current.temp_c;
+                    const humidity = data.current.humidity;
+
+                    // Additional air quality data (nested within current)
+                    const airQualityData = data.current.air_quality; 
+                    const co = airQualityData.co || 'N/A';
+                    const no2 = airQualityData.no2 || 'N/A';
+                    const o3 = airQualityData.o3 || 'N/A';
+                    const so2 = airQualityData.so2 || 'N/A';
+                    const pm25 = airQualityData.pm2_5 || 'N/A';
+                    const pm10 = airQualityData.pm10 || 'N/A';
+                    const usEpaIndex = airQualityData['us-epa-index'] || 'N/A';
+                    const gbDefraIndex = airQualityData['gb-defra-index'] || 'N/A';
+
+                    // Additional weather data
+                    const precipitation = data.current.precip_mm ?? 'N/A';
+                    const cloudCover = data.current.cloud ?? 'N/A';
+
+                    createHeader(city);
+
+                    return {
+                        temperature, humidity, co, no2, o3, so2, pm25, pm10,
+                        usEpaIndex, gbDefraIndex, precipitation, cloudCover
+                    };
+                } else {
+                    console.error('Error fetching weather data:', data.error.message);
+                    return null;
+                }
+            } catch (error) {
+                console.error('Error fetching weather data:', error.message);
+                return null;
+            }
+        }
+
+
+        function createCard(title, value) {
+            const card = document.createElement('div');
+            card.className = 'card';
+
+            const titleElement = document.createElement('h2');
+            titleElement.textContent = title;
+
+            const valueElement = document.createElement('p');
+            valueElement.textContent = value;
+
+            card.appendChild(titleElement);
+            card.appendChild(valueElement);
+
+            return card;
+        }
+
+        async function populateDashboard() {
+            const dashboardContainer = document.getElementById('dashboard-container');
+
+            const weatherData = await fetchWeatherData();
+
+            if (weatherData) {
+                const parameterArray = [
+                    { title: 'Temperature', dataKey: 'temperature', unit: '°C' },
+                    { title: 'Humidity', dataKey: 'humidity', unit: '%' },
+                    { title: 'CO', dataKey: 'co', unit: 'µg/m³' },
+                    { title: 'NO2', dataKey: 'no2', unit: 'µg/m³' },
+                    { title: 'O3', dataKey: 'o3', unit: 'µg/m³' },
+                    { title: 'SO2', dataKey: 'so2', unit: 'µg/m³' },
+                    { title: 'PM2.5', dataKey: 'pm25', unit: 'µg/m³' },
+                    { title: 'PM10', dataKey: 'pm10', unit: 'µg/m³' },
+                    { title: 'US EPA Index', dataKey: 'usEpaIndex', unit: '' },
+                    { title: 'GB DEFRA Index', dataKey: 'gbDefraIndex', unit: '' },
+                    { title: 'Precipitation', dataKey: 'precipitation', unit: 'mm' },
+                    { title: 'Cloud Cover', dataKey: 'cloudCover', unit: '%' }
+                ];
+
+                parameterArray.forEach((parameter) => {
+                    const { title, dataKey, unit } = parameter;
+                    const cardValue = weatherData[dataKey];
+
+                    const card = createCard(title, `${cardValue}${unit}`);
+                    dashboardContainer.appendChild(card);
+                });
+            }
+        }
+
+        window.onload = function () {
+            populateDashboard();
+        };
+
+
+        function createChart(chartId, labels, data, label) {
+            const ctx = document.getElementById(chartId).getContext('2d');
+            const chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: label,
+                        data: data,
+                        borderColor: 'rgba(124, 157, 69, 1)',
+                        backgroundColor: 'rgba(124, 157, 69, 0.2)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: [{
+                            type: 'time',
+                            time: {
+                                unit: 'day'
+                            }
+                        }],
+                        y: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+
+        async function fetchForecastData() {
+            try {
+                const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${city}&days=7&aqi=yes&alerts=yes`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    const labels = data.forecast.forecastday.map(day => day.date);
+                    const weatherData = data.forecast.forecastday.map(day => day.day.avgtemp_c);
+                    const humidityData = data.forecast.forecastday.map(day => day.day.avghumidity);
+
+                    createForecastHeader(city);
+
+                    createChart('weatherChart', labels, weatherData, 'Temperature (°C)');
+                    createChart('humidityChart', labels, humidityData, 'Humidity (%)');
+                } else {
+                    console.error('Error fetching forecast data:', data.error.message);
+                }
+            } catch (error) {
+                console.error('Error fetching forecast data:', error.message);
+            }
+        }
+
+        window.onload = function () {
+            populateDashboard();
+            fetchForecastData();
+        };
+    </script>
+    <!-- Disable Right Click -->
+    <script>
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+    </script>
+    
+</body>
+</html>

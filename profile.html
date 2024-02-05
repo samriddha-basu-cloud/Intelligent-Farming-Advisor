@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroPulse&#8480;</title>
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        ::-moz-selection { /* Code for Firefox */
+            color: #F8FFF8;
+            background: #4CAF50;
+        }
+
+        ::selection {
+            color: #F8FFF8;
+            background: #4CAF50;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #F8FFF8;
+        }
+
+        header {
+            background-color: #45a049;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #navbar-left {
+            display: flex;
+            align-items: center;
+        }
+
+        #navbar-left h1 {
+            margin: 0;
+        }
+
+        #navbar-right {
+            display: flex;
+            align-items: center;
+        }
+
+        #user-profile, #notifications {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            margin-left: 20px;
+            color: #fff;
+            font-size: 18px;
+        }
+
+        #dashboard-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #45a049;
+        }
+
+        p {
+            color: #666;
+        }
+
+        #pageHeader {
+            font-family: "Times New Roman", Times, serif;
+            letter-spacing: .5px;
+            font-weight: bold;
+            text-align: center;
+            margin: 10px;
+            font-size: 5vh;
+        }
+
+        #profile-picture {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px;
+        }
+
+        .circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .circle img {
+            width: 100%;
+            height: auto;
+            border: 2px solid #45a049; /* Adjust the border color as needed */
+            border-radius: 50%;
+        }
+
+        #profile-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
+
+        #profile-form label {
+            font-weight: bold;
+            margin: 5px 0;
+        }
+
+        #profile-form input {
+            padding: 5px;
+            margin-bottom: 10px;
+            width: 80%;
+        }
+
+        #logout-button-container {
+            text-align: center; /* Center the button */
+            margin-top: 20px; /* Adjust the margin as needed */
+        }
+
+        #logout-button {
+            background-color: #45a049;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        #logout-button:hover {
+            background-color: #4CAF50;
+        }
+
+        /* Media queries for responsiveness */
+        @media only screen and (max-width: 768px) {
+            /* Adjust mobile styling as needed */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div id="navbar-left">
+            <h1>AgroPulse&#8480;</h1>
+        </div>
+        <div id="navbar-right">
+            <a href="setting.html"><button id="user-profile"><i class="fas fa-gear"></i></button></a>
+            <a href="#"><button id="notifications"><i class="fas fa-bell"></i></button></a>
+            <a href="index.html"><button id="notifications"><i class="fas fa-home"></i></button></a>
+        </div>
+    </header>
+
+    <h2 id="pageHeader">Profile</h2>
+
+    <!-- Profile picture -->
+    <div id="profile-picture">
+        <div class="circle">
+            <img src="assets/images/favicon.png" alt="Profile Picture">
+        </div>
+    </div>
+
+    <!-- Profile form -->
+    <form id="profile-form">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="region">Region:</label>
+        <input type="text" id="region" name="region" required>
+
+        <label for="phone-number">Phone Number:</label>
+        <input type="tel" id="phone-number" name="phone-number" required>
+
+        <!-- Add more fields as needed -->
+    </form>
+
+    <!-- Logout button container -->
+    <div id="logout-button-container">
+        <button id="logout-button" onclick="logout()">Log Out</button>
+    </div>
+
+    <!-- Disable Right Click -->
+    <script>
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+
+        function logout() {
+            window.location.href = 'login.html';
+            alert('Logout button clicked. Add your logout logic.');
+        }
+    </script>
+</body>
+</html>
