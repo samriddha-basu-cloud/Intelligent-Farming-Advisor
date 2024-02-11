@@ -102,22 +102,36 @@
             border-radius: 50%;
         }
 
+
         #profile-form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 20px;
+            padding: 20px;
         }
 
         #profile-form label {
             font-weight: bold;
-            margin: 5px 0;
+            margin-bottom: 5px;
+            display: block;
+            float: left; /* Adjust the label alignment */
+            width: 30%; /* Adjust the label width */
+            text-align: right; /* Align the labels to the right */
+            margin-right: 2%; /* Add some spacing between labels and fields */
         }
 
-        #profile-form input {
-            padding: 5px;
+        #profile-form input,
+        #profile-form select {
+            width: 65%; /* Adjust the field width */
+            padding: 8px;
             margin-bottom: 10px;
-            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            float: left; /* Align the fields to the left */
+        }
+
+        #profile-form:after {
+            content: "";
+            display: table;
+            clear: both;
         }
 
         #logout-button-container {
@@ -142,7 +156,12 @@
 
         /* Media queries for responsiveness */
         @media only screen and (max-width: 768px) {
-            /* Adjust mobile styling as needed */
+            #profile-form {
+                grid-template-columns: repeat(2, 1fr); /* Change to single column layout on smaller screens */
+                padding: 20px 10px 15px;
+            }
+
+
         }
     </style>
 </head>
@@ -170,16 +189,44 @@
     <!-- Profile form -->
     <form id="profile-form">
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-
-        <label for="region">Region:</label>
-        <input type="text" id="region" name="region" required>
-
+        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+    
         <label for="phone-number">Phone Number:</label>
-        <input type="tel" id="phone-number" name="phone-number" required>
+        <input type="tel" id="phone-number" name="phone-number" placeholder="Enter your phone number" required>
 
-        <!-- Add more fields as needed -->
+        <label for="aadhaar-number">Aadhaar Number:</label>
+        <input type="text" id="aadhaar-number" name="aadhaar-number" placeholder="Enter Aadhaar number" required>
+    
+    
+        <label for="region">Region:</label>
+        <input type="text" id="region" name="region" placeholder="Enter your region" required>
+    
+        <label for="crop-type">Crop Types:</label>
+        <select id="crop-type" name="crop-type" required>
+            <option value="">Select Crop Type</option>
+            <option value="Wheat">Wheat</option>
+            <option value="Rice">Rice</option>
+            <!-- Add more options as needed -->
+        </select>
+    
+        <label for="crop-name">Crop Names:</label>
+        <select id="crop-name" name="crop-name" required>
+            <option value="">Select Crop Name</option>
+            <!-- Options will be dynamically populated based on the selected Crop Type -->
+        </select>
+    
+        <label for="farm-parameters">Farm Parameters:</label>
+        <input type="text" id="farm-parameters" name="farm-parameters" placeholder="Enter farm parameters" required>
+    
+        <label for="preferred-tenure">Preferred Tenure:</label>
+        <select id="preferred-tenure" name="preferred-tenure" required>
+            <option value="">Select Preferred Tenure</option>
+            <option value="1 Year">1 Year</option>
+            <option value="2 Years">2 Years</option>
+            <!-- Add more options as needed -->
+        </select>
     </form>
+    
 
     <!-- Logout button container -->
     <div id="logout-button-container">
@@ -199,3 +246,13 @@
     </script>
 </body>
 </html>
+
+
+
+                                                    <!-- Literature Survey
+
+// Ref no. |            Author              |          Title         |        Outcome       |       Limitations      |
+// [1]     | author name 1 , Et. al. [Year] |           ...          |         ...          |           ...          |
+// [2]
+
+springer, elsewhere -->

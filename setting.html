@@ -63,9 +63,6 @@
             padding: 20px;
         }
 
-        h2 {
-            color: #45a049;
-        }
 
         p {
             color: #666;
@@ -78,13 +75,61 @@
             text-align: center;
             margin: 10px;
             font-size: 5vh;
-        }
-        #logout-button-container {
-            text-align: center; /* Center the button */
-            margin-top: 20px; /* Adjust the margin as needed */
+            color: #4CAF50;
         }
 
-        #logout-button {
+        /* Main content styles */
+        #content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .setting-item {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        select, button {
+            margin-top: 5px;
+            width: 100%;
+        }
+
+        /* Remove decoration from dropdown menu */
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: none;
+            background-color: #ffffff; /* Set background color */
+            border: 1px solid #ccc; /* Add border for consistency */
+            padding: 8px; /* Add padding for better appearance */
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #logout-button-container {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px; /* Add margin bottom to separate the logout button from settings options */
+        }
+
+        #logout-button, #deactivate-account {
             background-color: #45a049;
             color: #fff;
             border: none;
@@ -93,16 +138,43 @@
             cursor: pointer;
             font-size: 14px;
             transition: background-color 0.3s;
+            margin: 0px 20px 0px;
         }
 
-        #logout-button:hover {
+        #logout-button:hover, #deactivate-account:hover {
             background-color: #4CAF50;
         }
 
         /* Media queries for responsiveness */
         @media only screen and (max-width: 768px) {
-            /* Adjust mobile styling as needed */
+            #content {
+                padding: 20px 50px; /* Adjust left and right padding */
+            }
+
+
+            .setting-item {
+                display: flex;
+                justify-content: space-between;
+            }
+                    
+            .setting-item > * {
+                flex-basis: calc(50% - 10px);
+            }
+
+            .button-container {
+                flex-direction: column;
+            }
+
+            #logout-button, #deactivate-account {
+                width: 100%;
+                margin-top: 10px;
+            }
+
+            .setting-item button {
+                margin-left: 10px; /* Add some margin between buttons */
+            }
         }
+        
     </style>
 </head>
 <body>
@@ -118,13 +190,37 @@
 
     <h2 id="pageHeader">Settings</h2>
 
-    
+    <div id="content">
+        <div class="setting-item">
+            <label for="language-select">Language:</label>
+            <select id="language-select" name="language-select">
+                <option value="en">English</option>
+                <option value="fr">বাংলা</option>
+                <option value="fr">ଓଡ଼ିଆ</option>
+                <option value="fr">हिंदी</option>
+                <option value="fr">ਪੰਜਾਬੀ</option>
+                <option value="fr">नेपाली</option>
+                <option value="fr">தமிழ்</option>
+                <option value="fr">తెలుగు</option>
+                <option value="fr">മലയാളം</option>
+                <option value="fr">ಕನ್ನಡ</option>
+                <option value="fr">অসমিয়া</option>
+            </select>
+        </div>
 
-    
+        <div class="setting-item">
+            <label for="font-size-select">Font Size:</label>
+            <select id="font-size-select" name="font-size-select">
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+            </select>
+        </div>
 
-    <!-- Logout button container -->
-    <div id="logout-button-container">
-        <button id="logout-button" onclick="logout()">Log Out</button>
+        <div class="setting-item button-container">
+            <button id="deactivate-account" onclick="logout()">Deactivate Account</button>
+            <button id="logout-button" onclick="logout()">Log Out</button>
+        </div>
     </div>
 
     <!-- Disable Right Click -->
@@ -139,4 +235,5 @@
         }
     </script>
 </body>
+
 </html>
