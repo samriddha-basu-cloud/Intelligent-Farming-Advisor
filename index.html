@@ -236,11 +236,11 @@
         
         <div id="soil-details" class="grid-box">
             <h2>Current Soil Data</h2>
-            <p id="moisture">Moisture: Loading...</p>
+            <p id="atmtemp">Atmospheric Temperature: Loading...</p>
+            <p id="humidity1">Humidity: Loading...</p>
             <p id="nitrogen">Nitrogen: Loading...</p>
-            <p id="potassium">Potassium: Loading...</p>
             <p id="phosphorus">Phosphorus: Loading...</p>
-            <p id="pH">pH: Loading...</p>
+            <p id="potassium">Potassium: Loading...</p>
             <button class="learn-more-button" onclick="navigateToSoil()">Analyze...</button>
         </div>
     </div>
@@ -293,6 +293,20 @@
         function navigateToSoil() {
             window.location.href = 'soil.html';
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('https://agricultue-5d809-default-rtdb.firebaseio.com/.json')
+                .then(response => response.json())
+                .then(data => {
+                    // Update soil-details with fetched data
+                    document.getElementById('atmtemp').textContent = `Atmospheric Temperature: ${data.atmtemp}`;
+                    document.getElementById('humidity1').textContent = `Humidity: ${data.humidity}`;
+                    document.getElementById('nitrogen').textContent = `Nitrogen: ${data.nitrogen}`;
+                    document.getElementById('phosphorus').textContent = `Phosphorus: ${data.phosphorus}`;
+                    document.getElementById('potassium').textContent = `Potassium: ${data.potassium}`;
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        });
     </script>
     
     <!-- Disable Right Click -->
