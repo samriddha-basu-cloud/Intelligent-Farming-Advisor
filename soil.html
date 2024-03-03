@@ -56,11 +56,22 @@
             font-size: 18px;
         }
 
-        #pageHeader {
-            font-family: "Times New Roman", Times, serif;
-            letter-spacing: .5px;
+        #dashboard-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
         }
 
+        .card {
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin: 15px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+        }
 
         h2 {
             color: #45a049;
@@ -70,37 +81,101 @@
             color: #666;
         }
 
-        h3 {
-            font-family: 'Times New Roman', Times, serif;
-            font-weight: 900;
+        canvas {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+       .section-header {
+            background-color: #45a049;
+            color: #fff;
+            padding: 10px;
             text-align: center;
-            margin-top: 250px;
-            font-size: 5vh;
-            color: #848484d6;
+        }
+
+        .chart-container {
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        #pageHeader {
+            font-family: "Times New Roman", Times, serif;
+            letter-spacing: .5px;
         }
 
         /* Media queries for responsiveness */
         @media only screen and (max-width: 768px) {
-            
+            #dashboard-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .card {
+                width: 80%;
+            }
         }
     </style>
 </head>
 <body>
     <header>
         <div id="navbar-left">
-            <h1>AgroPulse&#8480</h1>
+            <h1>AgroPulse&#8480;</h1>
         </div>
         <div id="navbar-right">
+            
             <a href="index.html"><button id="notifications"><i class="fas fa-home"></i></button></a>
-            <a href="weather.html"><button id="user-profile"><i class="fas fa-cloud"></i></button></a>
+            <a href="soil.html"><button id="user-profile"><i class="fas fa-microscope"></i></button></a>
             <a href="profile.html"><button id="user-profile"><i class="fas fa-user"></i></button></a>
         </div>
     </header>
 
-    <h2 id="pageHeader" style="font-weight: bold; text-align: center; margin: 10px; font-size: 5vh;">Soil Data Analysis</h2>
+    <h2 id="pageHeader" style="font-weight: bold; text-align: center; margin: 10px; font-size: 5vh;">Soil Data</h2>
 
-    <h3>Coming Soon ... </h3>
+    <div id="dashboard-container"></div>
+
     
+
+    <div class="chart-container">
+        <canvas id="weatherChart" width="400" height="200"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="humidityChart" width="400" height="200"></canvas>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('https://agricultue-5d809-default-rtdb.firebaseio.com/.json')
+                .then(response => response.json())
+                .then(data => {
+                    const dashboardContainer = document.getElementById('dashboard-container');
+                    
+                    // Clear existing data
+                    dashboardContainer.innerHTML = '';
+
+                    // Loop through the data and create cards for each value
+                    for (const key in data) {
+                        const value = data[key];
+                        const card = document.createElement('div');
+                        card.classList.add('card');
+
+                        // Create heading for the card
+                        const heading = document.createElement('h2');
+                        heading.textContent = key;
+                        card.appendChild(heading);
+
+                        // Create paragraph for the value
+                        const paragraph = document.createElement('p');
+                        paragraph.textContent = value;
+                        card.appendChild(paragraph);
+
+                        // Append the card to the dashboard container
+                        dashboardContainer.appendChild(card);
+                    }
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        });
     </script>
     <!-- Disable Right Click -->
     <script>
