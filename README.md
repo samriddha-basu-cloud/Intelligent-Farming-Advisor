@@ -9,7 +9,7 @@
 ![Firebase](https://img.shields.io/badge/-Firebase-orange?logo=firebase&logoColor=white)
 ![AWS SNS](https://img.shields.io/badge/-AWS%20SNS-red?logo=amazon-aws&logoColor=white)
 
-This project utilizes real-time weather and soil data fetched from APIs and sensors like NPK sensor and ESP32. Through Firebase integration, it analyzes optimal conditions for various crops, offering tailored advice to farmers. Future plans include regional language SMS reports and precision irrigation.
+This project utilizes real-time weather and soil data fetched from APIs and sensors like NPK sensor and ESP32. Through Firebase integration, it analyzes optimal conditions for various crops, offering tailored advice to farmers. Future plans include regional language SMS reports and precision irrigation. 👍🏻
 
 🌐 Website: [Intelligent Farming Advisor](https://intelligent-farming-advisor.netlify.app/)
 
